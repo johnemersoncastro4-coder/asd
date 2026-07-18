@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Presentation For You ❤️</title>
+    <style>
+        /* ==========================================================================
+           1. CORE VARIABLES & GLOBAL STYLES
+           ========================================================================== */
+        :root {
+            --primary-pink: #ffb7b2;
+            --romantic-rose: #ff8b94;
+            --soft-gold: #e2b767;
+            --dark-gold: #b8860b;
+            --warm-white: #fffaf0;
+            --text-color: #5d4037;
+            --shadow-color: rgba(255, 139, 148, 0.15);
+            --font-serif: 'Georgia', serif;
+            --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --slide-transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #f7eded;
+            color: var(--text-color);
+            overflow: hidden; /* Prevents unwanted browser scrolling between slides */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Ambient Background Layer */
+        .ambient-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* ==========================================================================
+           2. SLIDESHOW CONTAINER & NAVIGATION MECHANICS
+           ========================================================================== */
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+        }
+
+        /* Slide Core Layout - All slides stack absolutely */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            background: radial-gradient(circle at center, #ffffff 0%, var(--warm-white) 100%);
+            transition: var(--slide-transition);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* PowerPoint-Style Slide States */
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0) scale(1);
+        }
+
+        .slide.past {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-100%) scale(0.95);
+        }
+
+        .slide.future {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(100%) scale(1.05);
+        }
+
+        /* Reusable UI Components */
+        .slide-content-wrapper {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: slideUpFade 0.8s ease forwards;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            z-index: 10;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--romantic-rose), var(--primary-pink));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 139, 148, 0.35);
+            background: linear-gradient(135deg, var(--primary-pink), var(--romantic-rose));
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--soft-gold), #d4a343);
+        }
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #d4a343, var(--soft-gold));
+            box-shadow: 0 8px 20px rgba(226, 183, 103, 0.35);
+        }
+
+        /* ==========================================================================
+           3. KEYFRAME ANIMATIONS
+           ========================================================================== */
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,139,148,0.4)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(255,139,148,0.7)); }
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 150px; }
+        }
+
+        /* ==========================================================================
+           4. INDIVIDUAL SLIDE DESIGNS
+           ========================================================================== */
+        
+        /* SLIDE 1: Welcome */
+        .welcome-title {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--romantic-rose);
+            margin-bottom: 20px;
+            font-weight: normal;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        .welcome-text {
+            font-size: 1.25rem;
+            color: #7d6356;
+            font-style: italic;
+            max-width: 550px;
+            line-height: 1.6;
+        }
+
+        /* SLIDE 2: Birthday Greeting */
+        .greeting-name {
+            font-family: var(--font-serif);
+            font-size: 4.5rem;
+            color: var(--dark-gold);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .divider-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--soft-gold), transparent);
+            width: 150px;
+            margin-bottom: 25px;
+            animation: lineGrow 1.2s ease forwards;
+        }
+        .greeting-message {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            max-width: 650px;
+            color: var(--text-color);
+        }
+
+        /* SLIDE 3: Long Message Card */
+        .letter-card-static {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px var(--shadow-color);
+            border: 1px solid rgba(255, 183, 178, 0.2);
+            text-align: left;
+            max-width: 600px;
+            font-family: var(--font-serif);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* SLIDE 4: Surprise Dashboard Selector */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 100%;
+            margin-top: 30px;
+        }
+        .surprise-card {
+            background: white;
+            padding: 35px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            border: 1px solid rgba(255,183,178,0.1);
+        }
+        .surprise-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(255, 139, 148, 0.3);
+        }
+        .surprise-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .surprise-card h3 {
+            font-family: var(--font-serif);
+            color: var(--text-color);
+            font-size: 1.3rem;
+        }
+
+        /* SLIDE 5: Flowers Component */
+        .flower-display-frame {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            max-width: 450px;
+            width: 100%;
+        }
+        .flower-img-wrapper {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #fceeed;
+            position: relative;
+        }
+        .flower-img-wrapper::before {
+            content: '🌸 Bouquet Placeholder';
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: var(--romantic-rose); font-style: italic;
+        }
+        .flower-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 2;
+        }
+        .flower-caption {
+            margin-top: 20px;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        /* SLIDE 6: Photo Gallery Grid */
+        .photo-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 650px;
+            width: 100%;
+        }
+        .gallery-card {
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        .gallery-frame {
+            height: 180px;
+            background: #faf0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-frame::before {
+            content: '📸 Image Asset';
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #aaa; font-size: 0.85rem;
+        }
+        .gallery-frame img {
+            width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 2;
+        }
+
+        /* SLIDE 7: Envelope Animation Frame */
+        .envelope-container {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            background-color: var(--primary-pink);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-top: 140px solid var(--romantic-rose);
+            transform-origin: top;
+            z-index: 3;
+            transition: transform 0.6s ease 0.2s;
+        }
+        .envelope-pockets {
+            position: absolute; width: 100%; height: 100%; z-index: 2; overflow: hidden; border-radius: 0 0 12px 12px;
+        }
+        .envelope-pockets::before {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            border-left: 200px solid #ff9ea5; border-top: 130px solid transparent; border-bottom: 130px solid #ff9ea5;
+        }
+        .envelope-pockets::after {
+            content: ''; position: absolute; bottom: 0; right: 0;
+            border-right: 200px solid #ff9ea5; border-top: 130px solid transparent; border-bottom: 130px solid #ff9ea5;
+        }
+        .interactive-letter-paper {
+            position: absolute; top: 15px; left: 20px; width: 360px;
+            background: white; padding: 25px; border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); z-index: 1;
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1) 0.6s;
+            text-align: left; font-family: var(--font-serif); font-size: 0.95rem;
+        }
+        /* Dynamic CSS activation trigger rule when active */
+        .slide.active .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+        .slide.active .interactive-letter-paper {
+            transform: translateY(-130px);
+            z-index: 4;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        /* SLIDE 8: Song Page / Grand Finale */
+        .music-console-box {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 20px 45px var(--shadow-color);
+            max-width: 550px;
+            border: 1px solid rgba(226, 183, 103, 0.3);
+        }
+        .audio-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .play-btn {
+            width: 60px; height: 60px; border-radius: 50%; border: none;
+            background: var(--romantic-rose); color: white; font-size: 1.5rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(255,139,148,0.4);
+        }
+        .play-btn:hover { transform: scale(1.08); background: #ff7681; }
+        .track-status-label {
+            font-size: 0.9rem; color: #8d7366; font-weight: 600; letter-spacing: 0.5px;
+        }
+
+        /* Floating particles specific tags style specs */
+        .balloon, .heart, .sparkle {
+            position: absolute; bottom: -60px;
+            animation: floatUp linear infinite;
+        }
+
+        /* ==========================================================================
+           5. RESPONSIVE DESIGN BREAKPOINTS
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .welcome-title { font-size: 2.8rem; }
+            .greeting-name { font-size: 3rem; }
+            .greeting-message { font-size: 1.15rem; }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 15px; }
+            .photo-gallery-grid { grid-template-columns: 1fr; max-height: 40vh; overflow-y: auto; }
+            .envelope-container { width: 300px; height: 200px; }
+            .envelope-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 110px; }
+            .envelope-pockets::before { border-left-width: 150px; border-bottom-width: 105px; border-top-width: 105px; }
+            .envelope-pockets::after { border-right-width: 150px; border-bottom-width: 105px; border-top-width: 105px; }
+            .interactive-letter-paper { width: 270px; left: 15px; font-size: 0.85rem; padding: 15px; }
+            .slide.active .interactive-letter-paper { transform: translateY(-90px); }
+            .letter-card-static { padding: 20px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-layer" id="particle-canvas"></div>
+
+    <audio id="presentation-audio" src="birthday.mp3" loop></audio>
+
+    <div class="presentation-container">
+
+        <div class="slide active" id="slide-1">
+            <div class="slide-content-wrapper">
+                <h1 class="welcome-title">Happy Birthday!</h1>
+                <p class="welcome-text">Welcome to this little digital space made just for you. Click the button below to start your personal birthday slideshow presentation.</p>
+                <div class="nav-controls">
+                    <button class="btn" onclick="navigateTo(2)">Start Presentation ✨</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-2">
+            <div class="slide-content-wrapper">
+                <h1 class="greeting-name">Alex</h1>
+                <div class="divider-line"></div>
+                <p class="greeting-message">
+                    "Wishing you a day that is as incredibly beautiful, inspiring, and uniquely wonderful as you are to everyone around you."
+                </p>
+                <div class="nav-controls">
+                    <button class="btn btn-gold" onclick="navigateTo(1)">Back</button>
+                    <button class="btn" onclick="navigateTo(3)">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-3">
+            <div class="slide-content-wrapper">
+                <div class="letter-card-static">
+                    <p style="margin-bottom: 15px; font-weight: bold; color: var(--romantic-rose);">To an amazing person,</p>
+                    <p style="margin-bottom: 15px;">On this beautiful day, I wanted to take a moment to reflect on how grateful I am to have you in my life. Your smile adds genuine warmth to arbitrary days, and your laughter is completely contagious.</p>
+                    <p>May this upcoming year open wonderful new chapters, bring alignment to your deepest goals, and shower you with endless configurations of joy. You deserve the entire world!</p>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-gold" onclick="navigateTo(2)">Back</button>
+                    <button class="btn" onclick="navigateTo(4)">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-4">
+            <div class="slide-content-wrapper">
+                <h2 style="font-family: var(--font-serif); margin-bottom: 10px; color: var(--dark-gold);">Choose Your Surprise</h2>
+                <p style="color: #7d6356; font-style: italic; margin-bottom: 20px;">Click any card below to explore its special layout slide window.</p>
+                
+                <div class="dashboard-grid">
+                    <div class="surprise-card" onclick="navigateTo(5)">
+                        <span class="surprise-icon">🌸</span>
+                        <h3>Flowers for You</h3>
+                    </div>
+                    <div class="surprise-card" onclick="navigateTo(6)">
+                        <span class="surprise-icon">📸</span>
+                        <h3>My Photos</h3>
+                    </div>
+                    <div class="surprise-card" onclick="navigateTo(7)">
+                        <span class="surprise-icon">💌</span>
+                        <h3>My Letter</h3>
+                    </div>
+                </div>
+
+                <div class="nav-controls">
+                    <button class="btn btn-gold" onclick="navigateTo(3)">Back</button>
+                    <button class="btn" onclick="navigateTo(8)">Skip To End ❤️</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-5">
+            <div class="slide-content-wrapper">
+                <div class="flower-display-frame">
+                    <div class="flower-img-wrapper">
+                        <img src="images/flowers.jpg" alt="Flowers for you" onerror="this.style.opacity='0';">
+                    </div>
+                    <p class="flower-caption">A digital bouquet chosen to bring a beautiful smile to your face today. 🌸</p>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-gold" onclick="navigateTo(4)">Return to Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-6">
+            <div class="slide-content-wrapper">
+                <h2 style="font-family: var(--font-serif); margin-bottom: 25px; color: var(--romantic-rose);">Captured Memories</h2>
+                
+                <div class="photo-gallery-grid">
+                    <div class="gallery-card">
+                        <div class="gallery-frame"><img src="images/photo1.jpg" alt="Memory 1" onerror="this.style.opacity='0';"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-frame"><img src="images/photo2.jpg" alt="Memory 2" onerror="this.style.opacity='0';"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-frame"><img src="images/photo3.jpg" alt="Memory 3" onerror="this.style.opacity='0';"></div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="gallery-frame"><img src="images/photo4.jpg" alt="Memory 4" onerror="this.style.opacity='0';"></div>
+                    </div>
+                </div>
+
+                <div class="nav-controls">
+                    <button class="btn btn-gold" onclick="navigateTo(4)">Return to Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-7">
+            <div class="slide-content-wrapper">
+                <h2 style="font-family: var(--font-serif); color: var(--dark-gold);">A Letter Sent With Love</h2>
+                
+                <div class="envelope-container">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-pockets"></div>
+                    
+                    <div class="interactive-letter-paper">
+                        <h4 style="color: var(--romantic-rose); margin-bottom: 8px;">Hi There,</h4>
+                        <p style="line-height: 1.5; font-size: 0.9rem;">This interactive note was written with a lot of thought. I hope seeing this design brings a bit of creative joy to your morning or evening. Happy Birthday, and thanks for being uniquely yourself!</p>
+                    </div>
+                </div>
+
+                <div class="nav-controls" style="margin-top: 50px;">
+                    <button class="btn btn-gold" onclick="navigateTo(4)">Return to Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide future" id="slide-8">
+            <div class="slide-content-wrapper">
+                <div class="music-console-box">
+                    <h2 style="font-family: var(--font-serif); color: var(--romantic-rose); margin-bottom: 15px;">A Song For You</h2>
+                    <p style="font-size: 1.05rem; line-height: 1.7;">
+                        "Happy Birthday! Thank you for being such a wonderful person. I hope your special day is filled with love, happiness, laughter, and unforgettable memories."
+                    </p>
+
+                    <div class="audio-controls-row">
+                        <button class="play-btn" id="audio-toggle-action" onclick="toggleAudioEngine()">▶</button>
+                        <div style="text-align: left;">
+                            <p class="track-status-label" id="track-status-text">TRACK: birthday.mp3</p>
+                            <p style="font-size: 0.8rem; color: #a89084;" id="track-playing-state">Status: Paused</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-controls">
+                    <button class="btn btn-gold" onclick="navigateTo(4)">Back to Selector</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const audioNode = document.getElementById('presentation-audio');
+        const playBtnNode = document.getElementById('audio-toggle-action');
+        const trackStateText = document.getElementById('track-playing-state');
+        let dynamicAtmosphereInterval = null;
+
+        /**
+         * Navigation Function managing CSS class switching simulating PowerPoint slide transitions
+         * @param {number} targetSlideIndex - Target slide number path
+         */
+        function navigateTo(targetSlideIndex) {
+            const totalSlidesCount = 8;
+            
+            for (let i = 1; i <= totalSlidesCount; i++) {
+                const currentSlideElement = document.getElementById(`slide-${i}`);
+                if (!currentSlideElement) continue;
+
+                if (i === targetSlideIndex) {
+                    currentSlideElement.className = 'slide active';
+                } else if (i < targetSlideIndex) {
+                    currentSlideElement.className = 'slide past';
+                } else {
+                    currentSlideElement.className = 'slide future';
+                }
+            }
+
+            // Adjust background particle theme generations based on active slide contexts
+            handleAtmosphereTransitions(targetSlideIndex);
+        }
+
+        /**
+         * Generates programmatic background elements dynamically without layout overhead
+         * @param {string} particleType - Class classifier for generator node configuration ('balloon', 'heart', 'sparkle')
+         */
+        function injectParticle(particleType) {
+            const layerCanvas = document.getElementById('particle-canvas');
+            if (!layerCanvas) return;
+
+            const particleElement = document.createElement('div');
+            particleElement.className = particleType;
+
+            // Randomized attributes for visual natural variance
+            const horizontalViewportWidth = Math.random() * 100;
+            const elementScaleSize = Math.random() * 20 + 15; 
+            const speedDuration = Math.random() * 5 + 6; 
+            const executionDelay = Math.random() * 2;
+
+            particleElement.style.left = `${horizontalViewportWidth}vw`;
+            particleElement.style.animationDuration = `${speedDuration}s`;
+            particleElement.style.animationDelay = `${executionDelay}s`;
+
+            if (particleType === 'balloon') {
+                particleElement.style.width = `${elementScaleSize}px`;
+                particleElement.style.height = `${elementScaleSize * 1.2}px`;
+                particleElement.style.borderRadius = '50% 50% 50% 50% / 40% 40% 60% 60%';
+                
+                const colorPalette = ['#ffb7b2', '#ff8b94', '#ffdac1', '#e2b767', '#b5ead7'];
+                particleElement.style.backgroundColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                particleElement.style.opacity = '0.7';
+            } else if (particleType === 'heart') {
+                particleElement.innerHTML = '❤️';
+                particleElement.style.fontSize = `${elementScaleSize}px`;
+                particleElement.style.opacity = '0.6';
+            } else if (particleType === 'sparkle') {
+                particleElement.innerHTML = '✨';
+                particleElement.style.fontSize = `${elementScaleSize}px`;
+                particleElement.style.opacity = '0.75';
+            }
+
+            layerCanvas.appendChild(particleElement);
+
+            // Clean layout instances dynamically
+            setTimeout(() => {
+                particleElement.remove();
+            }, (speedDuration + executionDelay) * 1000);
+        }
+
+        /**
+         * Changes background generators based on active slide IDs
+         */
+        function handleAtmosphereTransitions(slideId) {
+            clearInterval(dynamicAtmosphereInterval);
+            
+            if (slideId === 1 || slideId === 2) {
+                dynamicAtmosphereInterval = setInterval(() => injectParticle('balloon'), 800);
+            } else if (slideId === 3 || slideId === 7 || slideId === 8) {
+                dynamicAtmosphereInterval = setInterval(() => injectParticle('heart'), 600);
+            } else {
+                dynamicAtmosphereInterval = setInterval(() => injectParticle('sparkle'), 500);
+            }
+        }
+
+        /**
+         * Toggles states of native HTML5 audio play nodes manually
+         */
+        function toggleAudioEngine() {
+            if (audioNode.paused) {
+                audioNode.play().then(() => {
+                    playBtnNode.innerHTML = '║';
+                    trackStateText.innerHTML = 'Status: Playing';
+                }).catch(err => {
+                    console.log("Audio file auto playback prevented. Ensure birthday.mp3 path is present.");
+                });
+            } else {
+                audioNode.pause();
+                playBtnNode.innerHTML = '▶';
+                trackStateText.innerHTML = 'Status: Paused';
+            }
+        }
+
+        // Initialize background generation instantly upon content load array readiness
+        window.addEventListener('DOMContentLoaded', () => {
+            handleAtmosphereTransitions(1);
+        });
+    </script>
+</body>
+</html>
